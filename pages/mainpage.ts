@@ -10,11 +10,13 @@ export class MainPage {
   // items related to 'Report Update Panel'
   readonly closeReportUpdateButton: Locator  
   readonly fullReportUpdateButton: Locator    
-  readonly reportItem: Locator  
+  readonly reportItemNames: Locator  
+  readonly reportItemAddButtons: Locator  
   readonly reportItemsList: Locator  
   readonly addItemButton: Locator
   readonly reportUpdatePanelHeader: Locator
   readonly spinner: Locator
+  readonly contentReportItems: Locator  
   
   constructor(page: Page) {
     this.page = page
@@ -24,9 +26,13 @@ export class MainPage {
     this.contentReportArea = page.locator('[class="report"]')
     this.addItemButton = page.locator('[class*="insert-report-content-item-button"]')        
     this.reportItemsList = page.locator('[class*="report-content-item-list"]')        
-    this.reportItem = page.locator('[class="report-content-item"]')        
+    this.reportItemNames = page.locator('[class*="report-content-item__name"]')        
+    this.reportItemAddButtons = page.locator('[class*="report-content-item__name"]')        
     this.reportUpdatePanelHeader = page.locator('[class="report-update-panel__header"]')        
     this.spinner = page.locator('[class="spinner-border"]')        
+
+    // content
+    this.contentReportItems = page.locator('//p[contains(text(),\'Inserted\')]')        
   }
 
   async open() {
@@ -41,5 +47,25 @@ export class MainPage {
     });
     await expect(this.spinner).toBeHidden();    
   };
+
+  async addItemToReport(name: string) {
+    const itemNnames = this.page.locator('[class*="report-content-item__name"]');
+    const itemAddButtons = this.page.locator('[class*="report-content-item__action"]');
+    
+    const count = await itemNnames.count()
+    for (let i = 0; i < count; ++i)
+    {
+      if(await itemNnames.nth(i).textContent() == name)
+      {
+        console.log("Adding to report: item name = " + await itemNnames.nth(i).textContent());
+        await itemAddButtons.nth(i).click();
+      }
+    }
+  };
+
+  // async isItemInReport(name): Promise<boolean> {
+  //   await this.contentReportItems.allTextContents();
+  //   // 
+}
   
 }
