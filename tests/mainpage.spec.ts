@@ -1,6 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { MainPage } from './../pages/mainpage';
 
+// test.beforeEach(async ({ page }, testInfo) => {
+//   const mpage = new MainPage(page);
+//   await mpage.open();
+// });
+
 test.skip('Main page have required components', async ({ page }) => {
   
   const mpage = new MainPage(page);    
