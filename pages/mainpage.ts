@@ -57,15 +57,30 @@ export class MainPage {
     {
       if(await itemNnames.nth(i).textContent() == name)
       {
-        console.log("Adding to report: item name = " + await itemNnames.nth(i).textContent());
         await itemAddButtons.nth(i).click();
       }
     }
   };
 
+  async isItemInReport(name: string): Promise<boolean> {
+    
+    const reportItems = await this.page.$$("//p[contains(text(),\'Inserted\')]");
+    const innerTexts = await Promise.all(reportItems.map(async (item, i) => {
+      return await item.innerText();
+    }));
+
+    innerTexts.forEach((item => {
+      var splitted = item.split(" ", 3)[1].toUpperCase();
+      console.log(item);
+      console.log(splitted);
+      if(splitted == name)
+      return true;      
+    }));
+    return false;
+  }
   // async isItemInReport(name): Promise<boolean> {
   //   await this.contentReportItems.allTextContents();
   //   // 
-}
+// }
   
 }
