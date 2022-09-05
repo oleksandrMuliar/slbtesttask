@@ -1,18 +1,21 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
+
 export class MainPage {
 
   readonly page: Page;
-
+  // initial items present on a page
   readonly openReportUpdateButton: Locator
-  readonly closeReportUpdateButton: Locator  
-  readonly fullReportUpdateButton: Locator  
   readonly contentReportArea: Locator
+  // items related to 'Report Update Panel'
+  readonly closeReportUpdateButton: Locator  
+  readonly fullReportUpdateButton: Locator    
+  readonly reportItem: Locator  
   readonly reportItemsList: Locator  
   readonly addItemButton: Locator
   readonly reportUpdatePanelHeader: Locator
   readonly spinner: Locator
-
+  
   constructor(page: Page) {
     this.page = page
     this.openReportUpdateButton = page.locator('button[class*="update-report-panel-button"]')
@@ -21,6 +24,7 @@ export class MainPage {
     this.contentReportArea = page.locator('[class="report"]')
     this.addItemButton = page.locator('[class*="insert-report-content-item-button"]')        
     this.reportItemsList = page.locator('[class*="report-content-item-list"]')        
+    this.reportItem = page.locator('[class="report-content-item"]')        
     this.reportUpdatePanelHeader = page.locator('[class="report-update-panel__header"]')        
     this.spinner = page.locator('[class="spinner-border"]')        
   }

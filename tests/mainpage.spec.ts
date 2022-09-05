@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { MainPage } from './../pages/mainpage';
 
 test('Main page have required components', async ({ page }) => {
+  
   const mpage = new MainPage(page);    
   await mpage.open();
   await expect(mpage.openReportUpdateButton).toBeVisible();
@@ -11,6 +12,7 @@ test('Main page have required components', async ({ page }) => {
 });
 
 test('Open Report Update Panel works properly', async ({ page }) => {
+  
   const mpage = new MainPage(page);
   await mpage.open();
   await mpage.openReportUpdateButton.click();
