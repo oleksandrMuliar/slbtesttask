@@ -48,6 +48,15 @@ export class MainPage {
     await expect(this.spinner).toBeHidden();    
   };
 
+  async closeUpdatePanel() {
+    await this.closeReportUpdateButton.click();
+    await this.page.waitForSelector('[class*="report-update-panel__close-button"]', {
+      state: 'detached',
+      timeout: 1000
+    });
+    await expect(this.closeReportUpdateButton).toBeHidden();    
+  };
+
   async addItemToReport(name: string) {
     const itemNnames = this.page.locator('[class*="report-content-item__name"]');
     const itemAddButtons = this.page.locator('[class*="report-content-item__action"]');
@@ -68,19 +77,23 @@ export class MainPage {
     const innerTexts = await Promise.all(reportItems.map(async (item, i) => {
       return await item.innerText();
     }));
+    console.log("innerTexts = " + innerTexts);
+    // innerTexts.find(e => e.split(" ", 3)[1].toUpperCase() == name.toUpperCase().replace(" ", "_")))
+    //   return true;
+    // else
+      return false; 
 
-    innerTexts.forEach((item => {
-      var splitted = item.split(" ", 3)[1].toUpperCase();
-      console.log(item);
-      console.log(splitted);
-      if(splitted == name)
-      return true;      
-    }));
-    return false;
+    // var result = false;
+
+    // innerTexts.forEach((item => {
+    //   var splitted = item.split(" ", 3)[1].toUpperCase();
+    //   // console.log(item);
+    //   // console.log(splitted);
+    //   if(splitted == name)
+    //   result =  true;      
+    // }));
+    
+    // return result;
   }
-  // async isItemInReport(name): Promise<boolean> {
-  //   await this.contentReportItems.allTextContents();
-  //   // 
-// }
-  
+
 }
