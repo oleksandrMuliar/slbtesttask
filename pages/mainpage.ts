@@ -63,9 +63,10 @@ export class MainPage {
     }
   };
 
-  // async isItemInReport(name): Promise<boolean> {
-  //   await this.contentReportItems.allTextContents();
-  //   // 
+  async isItemInReport(name): Promise<boolean> {
+    // await this.contentReportItems.allTextContents();
+    return await this.page.isVisible('a[routerlink="/editor"]');
+    // 
 }
   
 }

@@ -10,7 +10,6 @@ test.skip('Main page have required components', async ({ page }) => {
   
   const mpage = new MainPage(page);    
   await mpage.open();
-  // await page.waitForFunction(() => document.title === 'QA Test');
   await expect(mpage.openReportUpdateButton).toBeVisible();
   await expect(mpage.openReportUpdateButton).toBeVisible();
   await expect(mpage.reportUpdatePanelHeader).toBeHidden();
@@ -18,11 +17,10 @@ test.skip('Main page have required components', async ({ page }) => {
     
 });
 
-test.skip('Open Report Update Panel works properly', async ({ page }) => {
+test('Open Report Update Panel works properly', async ({ page }) => {
   
   const mpage = new MainPage(page);
   await mpage.open();
-  await mpage.openReportUpdateButton.click();
   await mpage.invokeUpdatePanel();
   // check that Panel items are displayed  
   await expect(mpage.reportUpdatePanelHeader).toBeVisible();
@@ -32,7 +30,7 @@ test.skip('Open Report Update Panel works properly', async ({ page }) => {
 
 });
 
-test('Add item to report', async ({ page }) => {
+test.skip('Add item to report', async ({ page }) => {
   
   const mpage = new MainPage(page);
   await mpage.open();
