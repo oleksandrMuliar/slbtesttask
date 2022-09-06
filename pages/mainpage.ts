@@ -17,6 +17,7 @@ export class MainPage {
   readonly reportUpdatePanelHeader: Locator
   readonly spinner: Locator
   readonly contentReportItems: Locator  
+  readonly createReportNotification: Locator  
   
   constructor(page: Page) {
     this.page = page
@@ -32,7 +33,9 @@ export class MainPage {
     this.spinner = page.locator('[class="spinner-border"]')        
 
     // content
-    this.contentReportItems = page.locator('//p[contains(text(),\'Inserted\')]')        
+    this.contentReportItems = page.locator('//p[contains(text(),\'Inserted\')]')  
+    
+    this.createReportNotification = page.locator('[class*="result-alert"]') 
   }
 
   async open() {
@@ -55,6 +58,17 @@ export class MainPage {
       timeout: 1000
     });
     await expect(this.closeReportUpdateButton).toBeHidden();    
+  };
+
+  async generateReport() {
+    await this.fullReportUpdateButton.click();
+    await expect(this.fullReportUpdateButton).toBeDisabled();
+    await expect(this.reportItemsList).toBeVisible(false);  
+    await this.page.waitForSelector('[class="spinner-border"]', {
+      state: 'detached',
+      timeout: 7000
+    });
+    await expect(this.fullReportUpdateButton).toBeVisible();
   };
 
   async addItemToReport(name: string) {

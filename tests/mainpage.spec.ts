@@ -30,7 +30,7 @@ test.skip('Open Report Update Panel works properly', async ({ page }) => {
 
 });
 
-test('Open Report Update Panel can be closed', async ({ page }) => {
+test.skip('Open & Close Report Update Panel can be closed', async ({ page }) => {
   
   const mpage = new MainPage(page);
   await mpage.open();
@@ -54,7 +54,7 @@ test.skip('Add item to report', async ({ page }) => {
   await mpage.open();
   await mpage.invokeUpdatePanel();
   await mpage.addItemToReport("Ford Cortina");
-  await expect(mpage.isItemInReport("Ford Cortina")).toEqual(true); 
+  // await expect(mpage.isItemInReport("Ford Cortina")).toEqual(true); 
 
 });
 
@@ -67,5 +67,20 @@ test.skip('Add multiply items to report', async ({ page }) => {
   // await expect(mpage.isItemInReport("Ford Cortina")).toEqual(true); 
   await mpage.addItemToReport("Ferrari 812 Superfast");
   await mpage.addItemToReport("Seat Tarraco");  
+
+});
+
+test('Generate full update report', async ({ page }) => {
+  
+  const mpage = new MainPage(page);
+  await mpage.open();
+  await mpage.invokeUpdatePanel();
+  // check that Panel items are displayed  
+  await mpage.addItemToReport("Ford Cortina");
+  await mpage.addItemToReport("Ferrari 812 Superfast");
+  await mpage.addItemToReport("Seat Tarraco");
+  await mpage.generateReport();
+
+  await expect(mpage.createReportNotification).toContainText('FINISHED');
 
 });
