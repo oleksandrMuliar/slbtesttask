@@ -16,8 +16,10 @@ export class MainPage {
   readonly addItemButton: Locator
   readonly reportUpdatePanelHeader: Locator
   readonly spinner: Locator
+  // content area
   readonly contentReportItems: Locator  
   readonly createReportNotification: Locator  
+  readonly closeReportNotificationButton: Locator  
   
   constructor(page: Page) {
     this.page = page
@@ -28,14 +30,13 @@ export class MainPage {
     this.addItemButton = page.locator('[class*="insert-report-content-item-button"]')        
     this.reportItemsList = page.locator('[class*="report-content-item-list"]')        
     this.reportItemNames = page.locator('[class*="report-content-item__name"]')        
-    this.reportItemAddButtons = page.locator('[class*="report-content-item__name"]')        
+    this.reportItemAddButtons = page.locator('[class*="report-content-item__action"]')        
     this.reportUpdatePanelHeader = page.locator('[class="report-update-panel__header"]')        
     this.spinner = page.locator('[class="spinner-border"]')        
-
-    // content
+    // content area
     this.contentReportItems = page.locator('//p[contains(text(),\'Inserted\')]')  
-    
     this.createReportNotification = page.locator('[class*="result-alert"]') 
+    this.closeReportNotificationButton = page.locator('[class*="alert"] > [class="close"]') 
   }
 
   async open() {
@@ -67,29 +68,34 @@ export class MainPage {
       state: 'detached',
       timeout: 7000
     });
-    await expect(this.fullReportUpdateButton).toBeVisible();
+    // await expect(this.fullReportUpdateButton).toBeVisible();
+    await expect(this.fullReportUpdateButton).toBeEnabled();
+  };
+
+  async closeReportNotification() {
+    await this.closeReportNotificationButton.click();    
   };
 
   async addItemToReport(name: string) {
-    const itemNnames = this.page.locator('[class*="report-content-item__name"]');
-    const itemAddButtons = this.page.locator('[class*="report-content-item__action"]');
-    
-    const count = await itemNnames.count()
+    const count = await this.reportItemNames.count()
     for (let i = 0; i < count; ++i)
     {
-      if(await itemNnames.nth(i).textContent() == name)
+      if(await this.reportItemNames.nth(i).textContent() == name)
       {
-        await itemAddButtons.nth(i).click();
+        await this.reportItemAddButtons.nth(i).click();
       }
     }
   };
 
   async isItemInReport(name: string){
     
-    const reportItems = await this.page.$$("//p[contains(text(),\'Inserted\')]");
+    const reportItems = await this.page.$$("//p[contains(text(),'[CONTENT]')]");
     const innerTexts = await Promise.all(reportItems.map(async (item, i) => {
       return await item.innerText();
     }));
+    
+    console.log("innerTexts = " + innerTexts);
+
     var res = innerTexts.map(e => e.split(" ", 3)[1].toUpperCase())
     console.log("res = " + res);
     console.log("name = " + name.toUpperCase().replace(/ /g, '_'));
