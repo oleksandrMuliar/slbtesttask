@@ -91,8 +91,9 @@ export class MainPage {
       return await item.innerText();
     }));
     var res = innerTexts.map(e => e.split(" ", 3)[1].toUpperCase())
-    // console.log(res.includes(name.toUpperCase().replace(" ", "_"))); 
-    await expect(res.includes(name.toUpperCase().replace(" ", "_"))).toEqual(true);
+    console.log("res = " + res);
+    console.log("name = " + name.toUpperCase().replace(/ /g, '_'));
+    expect(res.includes(name.toUpperCase().replace(/ /g, '_'))).toBe(true);
   }
 
 }

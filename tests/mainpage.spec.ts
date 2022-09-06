@@ -6,7 +6,7 @@ import { MainPage } from './../pages/mainpage';
 //   await mpage.open();
 // });
 
-test.skip('Main page have required components', async ({ page }) => {
+test('Main page have required components', async ({ page }) => {
   
   const mpage = new MainPage(page);    
   await mpage.open();
@@ -17,7 +17,7 @@ test.skip('Main page have required components', async ({ page }) => {
     
 });
 
-test.skip('Open Report Update Panel works properly', async ({ page }) => {
+test('Open Report Update Panel works properly', async ({ page }) => {
   
   const mpage = new MainPage(page);
   await mpage.open();
@@ -83,7 +83,7 @@ test('Generate full update report', async ({ page }) => {
 
   await expect(mpage.createReportNotification).toContainText('FINISHED');
   await mpage.isItemInReport("Ford Cortina");
-  await mpage.isItemInReport("Seat Tarraco");
   await mpage.isItemInReport("Ferrari 812 Superfast");
+  await mpage.isItemInReport("Seat Tarraco");  
   
 });
