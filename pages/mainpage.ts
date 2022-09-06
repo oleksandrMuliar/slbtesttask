@@ -68,7 +68,6 @@ export class MainPage {
       state: 'detached',
       timeout: 7000
     });
-    // await expect(this.fullReportUpdateButton).toBeVisible();
     await expect(this.fullReportUpdateButton).toBeEnabled();
   };
 
@@ -94,11 +93,9 @@ export class MainPage {
       return await item.innerText();
     }));
     
-    console.log("innerTexts = " + innerTexts);
-
     var res = innerTexts.map(e => e.split(" ", 3)[1].toUpperCase())
-    console.log("res = " + res);
-    console.log("name = " + name.toUpperCase().replace(/ /g, '_'));
+    // console.log("res = " + res);
+    // console.log("name = " + name.toUpperCase().replace(/ /g, '_'));
     expect(res.includes(name.toUpperCase().replace(/ /g, '_'))).toBe(true);
   }
 
