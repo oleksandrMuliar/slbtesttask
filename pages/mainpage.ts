@@ -68,7 +68,6 @@ export class MainPage {
       state: 'detached',
       timeout: 7000
     });
-    // await expect(this.fullReportUpdateButton).toBeVisible();
     await expect(this.fullReportUpdateButton).toBeEnabled();
   };
 
