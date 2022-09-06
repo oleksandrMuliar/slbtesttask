@@ -19,6 +19,7 @@ export class MainPage {
   // content area
   readonly contentReportItems: Locator  
   readonly createReportNotification: Locator  
+  readonly closeReportNotificationButton: Locator  
   
   constructor(page: Page) {
     this.page = page
@@ -35,6 +36,7 @@ export class MainPage {
     // content area
     this.contentReportItems = page.locator('//p[contains(text(),\'Inserted\')]')  
     this.createReportNotification = page.locator('[class*="result-alert"]') 
+    this.closeReportNotificationButton = page.locator('[class*="alert"] > [class="close"]') 
   }
 
   async open() {
@@ -66,7 +68,12 @@ export class MainPage {
       state: 'detached',
       timeout: 7000
     });
-    await expect(this.fullReportUpdateButton).toBeVisible();
+    // await expect(this.fullReportUpdateButton).toBeVisible();
+    await expect(this.fullReportUpdateButton).toBeEnabled();
+  };
+
+  async closeReportNotification() {
+    await this.closeReportNotificationButton.click();    
   };
 
   async addItemToReport(name: string) {
@@ -82,13 +89,16 @@ export class MainPage {
 
   async isItemInReport(name: string){
     
-    const reportItems = await this.page.$$("//p[contains(text(),\'Inserted\')]");
+    const reportItems = await this.page.$$("//p[contains(text(),'[CONTENT]')]");
     const innerTexts = await Promise.all(reportItems.map(async (item, i) => {
       return await item.innerText();
     }));
+    
+    console.log("innerTexts = " + innerTexts);
+
     var res = innerTexts.map(e => e.split(" ", 3)[1].toUpperCase())
-    // console.log("res = " + res);
-    // console.log("name = " + name.toUpperCase().replace(/ /g, '_'));
+    console.log("res = " + res);
+    console.log("name = " + name.toUpperCase().replace(/ /g, '_'));
     expect(res.includes(name.toUpperCase().replace(/ /g, '_'))).toBe(true);
   }
 
