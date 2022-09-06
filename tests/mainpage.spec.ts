@@ -91,6 +91,5 @@ test('Add items to already existing report', async ({ page }) => {
   await mpage.isItemInReport("Ferrari 812 Superfast");
   await mpage.isItemInReport("Seat Tarraco");  
   await mpage.isItemInReport("Rolls Royce Wraith");  
-
   
 });
