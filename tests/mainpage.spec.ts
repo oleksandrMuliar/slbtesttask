@@ -1,12 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { MainPage } from './../pages/mainpage';
 
-// test.beforeEach(async ({ page }, testInfo) => {
-//   const mpage = new MainPage(page);
-//   await mpage.open();
-// });
-
-test('Main page have required components', async ({ page }) => {
+test.skip('Main page have required components', async ({ page }) => {
   
   const mpage = new MainPage(page);    
   await mpage.open();
@@ -17,7 +12,7 @@ test('Main page have required components', async ({ page }) => {
     
 });
 
-test('Open Report Update Panel works properly', async ({ page }) => {
+test.skip('Report Update Panel works properly', async ({ page }) => {
   
   const mpage = new MainPage(page);
   await mpage.open();
@@ -30,7 +25,7 @@ test('Open Report Update Panel works properly', async ({ page }) => {
 
 });
 // to finish
-test.skip('Open & Close Report Update Panel can be closed', async ({ page }) => {
+test('Report Update Panel can be closed', async ({ page }) => {
   
   const mpage = new MainPage(page);
   await mpage.open();
@@ -49,13 +44,13 @@ test.skip('Open & Close Report Update Panel can be closed', async ({ page }) => 
 });
 
 // to finish
-test.skip('Add item to report', async ({ page }) => {
+test('Add item to report', async ({ page }) => {
   
   const mpage = new MainPage(page);
   await mpage.open();
   await mpage.invokeUpdatePanel();
   await mpage.addItemToReport("Ford Cortina");
-  // await expect(mpage.isItemInReport("Ford Cortina")).toEqual(true); 
+  await mpage.isItemInReport("Ford Cortina");  
 
 });
 
@@ -80,7 +75,6 @@ test('Generate full update report', async ({ page }) => {
   await mpage.addItemToReport("Ferrari 812 Superfast");
   await mpage.addItemToReport("Seat Tarraco");
   await mpage.generateReport();
-
   await expect(mpage.createReportNotification).toContainText('FINISHED');
   await mpage.isItemInReport("Ford Cortina");
   await mpage.isItemInReport("Ferrari 812 Superfast");
