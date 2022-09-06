@@ -45,29 +45,30 @@ export class MainPage {
 
   async invokeUpdatePanel() {
     await this.openReportUpdateButton.click()
-    await this.page.waitForSelector('[class="spinner-border"]', {
-      state: 'detached',
-      timeout: 7000
-    });
-    await expect(this.spinner).toBeHidden();    
+    // await this.page.waitForSelector('[class="spinner-border"]', {
+    //   state: 'detached',
+    //   timeout: 7000
+    // });
+    await expect(this.spinner).toBeHidden({timeout: 7000});    
   };
 
   async closeUpdatePanel() {
     await this.closeReportUpdateButton.click();
-    await this.page.waitForSelector('[class*="report-update-panel__close-button"]', {
-      state: 'detached',
-      timeout: 1000
-    });
-    await expect(this.closeReportUpdateButton).toBeHidden();    
+    // await this.page.waitForSelector('[class*="report-update-panel__close-button"]', {
+    //   state: 'detached',
+    //   timeout: 1000
+    // });
+    await expect(this.closeReportUpdateButton).toBeHidden({timeout: 1000});    
   };
 
   async generateReport() {
     await this.fullReportUpdateButton.click();
     await expect(this.fullReportUpdateButton).toBeDisabled();
-    await this.page.waitForSelector('[class="spinner-border"]', {
-      state: 'detached',
-      timeout: 7000
-    });
+    // await this.page.waitForSelector('[class="spinner-border"]', {
+    //   state: 'detached',
+    //   timeout: 7000
+    // });
+    await expect(this.spinner).toBeHidden({timeout: 7000}); 
     await expect(this.fullReportUpdateButton).toBeEnabled();
   };
 
