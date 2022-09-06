@@ -5,6 +5,7 @@ test('Main page have required components', async ({ page }) => {
   
   const mpage = new MainPage(page);    
   await mpage.open();
+  expect(await page.title()).toEqual("QA Test");
   await expect(mpage.openReportUpdateButton).toBeVisible();
   await expect(mpage.openReportUpdateButton).toBeVisible();
   await expect(mpage.reportUpdatePanelHeader).toBeHidden();
