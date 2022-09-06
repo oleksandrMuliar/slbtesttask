@@ -63,7 +63,6 @@ export class MainPage {
   async generateReport() {
     await this.fullReportUpdateButton.click();
     await expect(this.fullReportUpdateButton).toBeDisabled();
-    await expect(this.reportItemsList).toBeVisible(false);  
     await this.page.waitForSelector('[class="spinner-border"]', {
       state: 'detached',
       timeout: 7000
@@ -85,29 +84,16 @@ export class MainPage {
     }
   };
 
-  async isItemInReport(name: string): Promise<boolean> {
+  async isItemInReport(name: string){
     
     const reportItems = await this.page.$$("//p[contains(text(),\'Inserted\')]");
     const innerTexts = await Promise.all(reportItems.map(async (item, i) => {
       return await item.innerText();
     }));
-    console.log("innerTexts = " + innerTexts);
-    // innerTexts.find(e => e.split(" ", 3)[1].toUpperCase() == name.toUpperCase().replace(" ", "_")))
-    //   return true;
-    // else
-      return false; 
-
-    // var result = false;
-
-    // innerTexts.forEach((item => {
-    //   var splitted = item.split(" ", 3)[1].toUpperCase();
-    //   // console.log(item);
-    //   // console.log(splitted);
-    //   if(splitted == name)
-    //   result =  true;      
-    // }));
-    
-    // return result;
+    var res = innerTexts.map(e => e.split(" ", 3)[1].toUpperCase())
+    console.log("res = " + res);
+    console.log("name = " + name.toUpperCase().replace(/ /g, '_'));
+    expect(res.includes(name.toUpperCase().replace(/ /g, '_'))).toBe(true);
   }
 
 }
