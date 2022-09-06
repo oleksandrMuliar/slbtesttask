@@ -17,6 +17,7 @@ export class MainPage {
   readonly reportUpdatePanelHeader: Locator
   readonly spinner: Locator
   readonly contentReportItems: Locator  
+  readonly createReportNotification: Locator  
   
   constructor(page: Page) {
     this.page = page
@@ -32,7 +33,9 @@ export class MainPage {
     this.spinner = page.locator('[class="spinner-border"]')        
 
     // content
-    this.contentReportItems = page.locator('//p[contains(text(),\'Inserted\')]')        
+    this.contentReportItems = page.locator('//p[contains(text(),\'Inserted\')]')  
+    
+    this.createReportNotification = page.locator('[class*="result-alert"]') 
   }
 
   async open() {
@@ -46,6 +49,26 @@ export class MainPage {
       timeout: 7000
     });
     await expect(this.spinner).toBeHidden();    
+  };
+
+  async closeUpdatePanel() {
+    await this.closeReportUpdateButton.click();
+    await this.page.waitForSelector('[class*="report-update-panel__close-button"]', {
+      state: 'detached',
+      timeout: 1000
+    });
+    await expect(this.closeReportUpdateButton).toBeHidden();    
+  };
+
+  async generateReport() {
+    await this.fullReportUpdateButton.click();
+    await expect(this.fullReportUpdateButton).toBeDisabled();
+    await expect(this.reportItemsList).toBeVisible(false);  
+    await this.page.waitForSelector('[class="spinner-border"]', {
+      state: 'detached',
+      timeout: 7000
+    });
+    await expect(this.fullReportUpdateButton).toBeVisible();
   };
 
   async addItemToReport(name: string) {
@@ -68,19 +91,23 @@ export class MainPage {
     const innerTexts = await Promise.all(reportItems.map(async (item, i) => {
       return await item.innerText();
     }));
+    console.log("innerTexts = " + innerTexts);
+    // innerTexts.find(e => e.split(" ", 3)[1].toUpperCase() == name.toUpperCase().replace(" ", "_")))
+    //   return true;
+    // else
+      return false; 
 
-    innerTexts.forEach((item => {
-      var splitted = item.split(" ", 3)[1].toUpperCase();
-      console.log(item);
-      console.log(splitted);
-      if(splitted == name)
-      return true;      
-    }));
-    return false;
+    // var result = false;
+
+    // innerTexts.forEach((item => {
+    //   var splitted = item.split(" ", 3)[1].toUpperCase();
+    //   // console.log(item);
+    //   // console.log(splitted);
+    //   if(splitted == name)
+    //   result =  true;      
+    // }));
+    
+    // return result;
   }
-  // async isItemInReport(name): Promise<boolean> {
-  //   await this.contentReportItems.allTextContents();
-  //   // 
-// }
-  
+
 }
