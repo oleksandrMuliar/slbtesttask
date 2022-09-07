@@ -45,29 +45,17 @@ export class MainPage {
 
   async invokeUpdatePanel() {
     await this.openReportUpdateButton.click()
-    // await this.page.waitForSelector('[class="spinner-border"]', {
-    //   state: 'detached',
-    //   timeout: 7000
-    // });
     await expect(this.spinner).toBeHidden({timeout: 7000});    
   };
 
   async closeUpdatePanel() {
     await this.closeReportUpdateButton.click();
-    // await this.page.waitForSelector('[class*="report-update-panel__close-button"]', {
-    //   state: 'detached',
-    //   timeout: 1000
-    // });
     await expect(this.closeReportUpdateButton).toBeHidden({timeout: 1000});    
   };
 
   async generateReport() {
     await this.fullReportUpdateButton.click();
     await expect(this.fullReportUpdateButton).toBeDisabled();
-    // await this.page.waitForSelector('[class="spinner-border"]', {
-    //   state: 'detached',
-    //   timeout: 7000
-    // });
     await expect(this.spinner).toBeHidden({timeout: 7000}); 
     await expect(this.fullReportUpdateButton).toBeEnabled();
   };
@@ -78,25 +66,20 @@ export class MainPage {
 
   async addItemToReport(name: string) {
     const count = await this.reportItemNames.count()
-    for (let i = 0; i < count; ++i)
-    {
-      if(await this.reportItemNames.nth(i).textContent() == name)
-      {
+    for (let i = 0; i < count; ++i) {
+      if (await this.reportItemNames.nth(i).textContent() == name) {
         await this.reportItemAddButtons.nth(i).click();
       }
     }
   };
 
-  async isItemInReport(name: string){
-    
+  async isItemInReport(name: string) {
     const reportItems = await this.page.$$("//p[contains(text(),'[CONTENT]')]");
     const innerTexts = await Promise.all(reportItems.map(async (item, i) => {
       return await item.innerText();
     }));
-    
+
     var res = innerTexts.map(e => e.split(" ", 3)[1].toUpperCase())
-    // console.log("res = " + res);
-    // console.log("name = " + name.toUpperCase().replace(/ /g, '_'));
     expect(res.includes(name.toUpperCase().replace(/ /g, '_'))).toBe(true);
   }
 
