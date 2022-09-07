@@ -40,7 +40,7 @@ export class MainPage {
   }
 
   async open() {
-      await this.page.goto('https://mr-fedorof.github.io/qa-test/');
+      await this.page.goto('/qa-test/');
   }
 
   async invokeUpdatePanel() {
