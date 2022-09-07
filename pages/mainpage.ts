@@ -23,24 +23,20 @@ export class MainPage {
   
   constructor(page: Page) {
     this.page = page
-    this.openReportUpdateButton = page.locator('button[class*="update-report-panel-button"]')
-    this.closeReportUpdateButton = page.locator('[class*="report-update-panel__close-button"]')
-    this.fullReportUpdateButton = page.locator('button[class*="full-update-report-button"]')
-    this.contentReportArea = page.locator('[class="report"]')
-    this.addItemButton = page.locator('[class*="insert-report-content-item-button"]')        
-    this.reportItemsList = page.locator('[class*="report-content-item-list"]')        
-    this.reportItemNames = page.locator('[class*="report-content-item__name"]')        
-    this.reportItemAddButtons = page.locator('[class*="report-content-item__action"]')        
-    this.reportUpdatePanelHeader = page.locator('[class="report-update-panel__header"]')        
-    this.spinner = page.locator('[class="spinner-border"]')        
+    this.openReportUpdateButton = page.locator('.update-report-panel-button')
+    this.closeReportUpdateButton = page.locator('.report-update-panel__close-button')
+    this.fullReportUpdateButton = page.locator('.report-update-panel__footer .full-update-report-button')
+    this.contentReportArea = page.locator('.content .report')
+    this.addItemButton = page.locator('.insert-report-content-item-button')        
+    this.reportItemsList = page.locator('.report-content-item-list')        
+    this.reportItemNames = page.locator('div.report-content-item__name')        
+    this.reportItemAddButtons = page.locator('div.report-content-item__action')        
+    this.reportUpdatePanelHeader = page.locator('div.report-update-panel__header')        
+    this.spinner = page.locator('div.spinner-border')        
     // content area
     this.contentReportItems = page.locator('//p[contains(text(),\'Inserted\')]')  
-    this.createReportNotification = page.locator('[class*="result-alert"]') 
-    this.closeReportNotificationButton = page.locator('[class*="alert"] > [class="close"]') 
-  }
-
-  async open() {
-      await this.page.goto('https://mr-fedorof.github.io/qa-test/');
+    this.createReportNotification = page.locator('div.result-alert') 
+    this.closeReportNotificationButton = page.locator('.alert .close') 
   }
 
   async invokeUpdatePanel() {
