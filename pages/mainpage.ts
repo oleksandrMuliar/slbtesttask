@@ -39,10 +39,6 @@ export class MainPage {
     this.closeReportNotificationButton = page.locator('.alert .close') 
   }
 
-  async open() {
-      await this.page.goto('/qa-test/');
-  }
-
   async invokeUpdatePanel() {
     await this.openReportUpdateButton.click()
     await expect(this.spinner).toBeHidden({timeout: 7000});    
