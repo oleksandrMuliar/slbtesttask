@@ -1,10 +1,16 @@
 import { test, expect } from '@playwright/test';
-import { MainPage } from './../pages/mainpage';
+import { MainPage } from './../pages/MainPage';
+import { BasePage } from './../pages/BasePage';
+
+
+test.beforeEach(async ({ page }) => {
+  const bPage = new BasePage(page);     
+  await bPage.openUrl("/qa-test/");
+});
 
 test('Main page have required components', async ({ page }) => {
   
   const mpage = new MainPage(page);    
-  await mpage.open();
   expect(await page.title()).toEqual("QA Test");
   await expect(mpage.openReportUpdateButton).toBeVisible();
   await expect(mpage.openReportUpdateButton).toBeVisible();
@@ -16,7 +22,6 @@ test('Main page have required components', async ({ page }) => {
 test('Report Update Panel could be opened', async ({ page }) => {
   
   const mpage = new MainPage(page);
-  await mpage.open();
   await mpage.invokeUpdatePanel();
   await expect(mpage.reportUpdatePanelHeader).toBeVisible();
   await expect(mpage.reportItemsList).toBeVisible();
@@ -28,7 +33,6 @@ test('Report Update Panel could be opened', async ({ page }) => {
 test('Report Update Panel can be closed', async ({ page }) => {
   
   const mpage = new MainPage(page);
-  await mpage.open();
   await mpage.invokeUpdatePanel();
   // check that Panel items are displayed  
   await expect(mpage.reportUpdatePanelHeader).toBeVisible();
@@ -46,7 +50,6 @@ test('Report Update Panel can be closed', async ({ page }) => {
 test('Add single item to report', async ({ page }) => {
   
   const mpage = new MainPage(page);
-  await mpage.open();
   await mpage.invokeUpdatePanel();
   await mpage.addItemToReport("Ford Cortina");
   await mpage.generateReport();
@@ -59,7 +62,6 @@ test('Add single item to report', async ({ page }) => {
 test('Add multiple items to report', async ({ page }) => {
   
   const mpage = new MainPage(page);
-  await mpage.open();
   await mpage.invokeUpdatePanel();
   await mpage.addItemToReport("Ferrari 812 Superfast");
   await mpage.addItemToReport("Seat Tarraco");
@@ -74,7 +76,6 @@ test('Add multiple items to report', async ({ page }) => {
 test('Add items to already existing report', async ({ page }) => {
   
   const mpage = new MainPage(page);
-  await mpage.open();
   await mpage.invokeUpdatePanel();
   await mpage.addItemToReport("Ferrari 812 Superfast");
   await mpage.addItemToReport("Seat Tarraco");
