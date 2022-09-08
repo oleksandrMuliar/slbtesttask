@@ -67,14 +67,4 @@ export class UpdatePanelPage {
     }
   };
 
-  async isItemInReport(name: string) {
-    const reportItems = await this.page.$$("//p[contains(text(),'[CONTENT]')]");
-    const innerTexts = await Promise.all(reportItems.map(async (item, i) => {
-      return await item.innerText();
-    }));
-
-    var res = innerTexts.map(e => e.split(" ", 3)[1].toUpperCase())
-    expect(res.includes(name.toUpperCase().replace(/ /g, '_'))).toBe(true);
-  }
-
 }

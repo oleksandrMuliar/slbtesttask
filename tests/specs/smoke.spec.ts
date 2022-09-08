@@ -6,6 +6,10 @@ import { ContentPage } from '../pages/ContentPage';
 
 test.describe('Smoke scenarios', () => {
 
+  // keyword to check that item has been added into final report
+  // result: 'Inserted PORSCHE_911_CARRERA [CONTENT]'
+  const addedStatus = " [CONTENT]";
+
   test.beforeEach(async ({ page }) => {
     const bPage = new BasePage(page);     
     await bPage.openUrl("/qa-test/");
@@ -61,7 +65,7 @@ test.describe('Smoke scenarios', () => {
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await header.closeReportNotification();
-    await expect(content.fullText).toContainText(content.formatItemName("Ford Cortina"));    
+    await expect(content.fullText).toContainText(content.formatItemName("Ford Cortina") + addedStatus);    
 
   });
 
@@ -76,8 +80,8 @@ test.describe('Smoke scenarios', () => {
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await updPanel.closeReportNotification();
-    await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast"));
-    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco"));
+    await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast") + addedStatus);
+    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco") + addedStatus);
     
   });
 
@@ -92,16 +96,16 @@ test.describe('Smoke scenarios', () => {
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await header.closeReportNotification();
-    await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast"));
-    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco"));
+    await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast") + addedStatus);
+    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco") + addedStatus);
     // add +1 item to a report
     await updPanel.addItemToReport("Rolls Royce Wraith");
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await header.closeReportNotification();
-    await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast"));
-    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco"));
-    await expect(content.fullText).toContainText(content.formatItemName("Rolls Royce Wraith"));   
+    await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast") + addedStatus);
+    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco") + addedStatus);
+    await expect(content.fullText).toContainText(content.formatItemName("Rolls Royce Wraith") + addedStatus);   
 
   });
 
