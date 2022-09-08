@@ -1,12 +1,10 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-export class MainPage {
+export class UpdatePanelPage {
 
   readonly page: Page;
-  // initial items present on a page
-  readonly openReportUpdateButton: Locator
-  readonly contentReportArea: Locator
+
   // items related to 'Report Update Panel'
   readonly closeReportUpdateButton: Locator  
   readonly fullReportUpdateButton: Locator    
@@ -23,10 +21,8 @@ export class MainPage {
   
   constructor(page: Page) {
     this.page = page
-    this.openReportUpdateButton = page.locator('.update-report-panel-button')
     this.closeReportUpdateButton = page.locator('.report-update-panel__close-button')
     this.fullReportUpdateButton = page.locator('.report-update-panel__footer .full-update-report-button')
-    this.contentReportArea = page.locator('.content .report')
     this.addItemButton = page.locator('.insert-report-content-item-button')        
     this.reportItemsList = page.locator('.report-content-item-list')        
     this.reportItemNames = page.locator('div.report-content-item__name')        
@@ -39,21 +35,20 @@ export class MainPage {
     this.closeReportNotificationButton = page.locator('.alert .close') 
   }
 
-  async invokeUpdatePanel() {
-    await this.openReportUpdateButton.click()
-    await expect(this.spinner).toBeHidden({timeout: 7000});    
-  };
-
   async closeUpdatePanel() {
-    await this.closeReportUpdateButton.click();
-    await expect(this.closeReportUpdateButton).toBeHidden({timeout: 1000});    
+    await Promise.all([
+      await this.closeReportUpdateButton.click(),
+      await this.closeReportUpdateButton.isHidden()
+    ]);
   };
 
   async generateReport() {
-    await this.fullReportUpdateButton.click();
-    await expect(this.fullReportUpdateButton).toBeDisabled();
-    await expect(this.spinner).toBeHidden({timeout: 7000}); 
-    await expect(this.fullReportUpdateButton).toBeEnabled();
+    await Promise.all([
+      await this.fullReportUpdateButton.click(),
+      await this.createReportNotification.isEnabled(),
+      await this.spinner.isHidden(),
+      await this.fullReportUpdateButton.isEnabled()      
+    ]);
   };
 
   async closeReportNotification() {
@@ -61,6 +56,9 @@ export class MainPage {
   };
 
   async addItemToReport(name: string) {
+    await Promise.all([
+      await this.reportItemsList.isEnabled()      
+    ]);    
     const count = await this.reportItemNames.count()
     for (let i = 0; i < count; ++i) {
       if (await this.reportItemNames.nth(i).textContent() == name) {
