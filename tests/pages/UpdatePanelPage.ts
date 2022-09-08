@@ -35,21 +35,26 @@ export class UpdatePanelPage {
     this.closeReportNotificationButton = page.locator('.alert .close') 
   }
 
-  async invokeUpdatePanel() {
-    await this.openReportUpdateButton.click()
-    await expect(this.spinner).toBeHidden({timeout: 7000});    
-  };
-
   async closeUpdatePanel() {
-    await this.closeReportUpdateButton.click();
-    await expect(this.closeReportUpdateButton).toBeHidden({timeout: 1000});    
+    // await this.closeReportUpdateButton.click();
+    // await expect(this.closeReportUpdateButton).toBeHidden({timeout: 1000});    
+    await Promise.all([
+      await this.closeReportUpdateButton.click(),
+      await this.closeReportUpdateButton.isHidden()
+    ]);
   };
 
   async generateReport() {
-    await this.fullReportUpdateButton.click();
-    await expect(this.fullReportUpdateButton).toBeDisabled();
-    await expect(this.spinner).toBeHidden({timeout: 7000}); 
-    await expect(this.fullReportUpdateButton).toBeEnabled();
+    // await this.fullReportUpdateButton.click();
+    // await expect(this.fullReportUpdateButton).toBeDisabled();
+    // await expect(this.spinner).toBeHidden({timeout: 7000}); 
+    // await expect(this.fullReportUpdateButton).toBeEnabled();
+    await Promise.all([
+      await this.fullReportUpdateButton.click(),
+      await this.createReportNotification.isEnabled(),
+      await this.spinner.isHidden(),
+      await this.fullReportUpdateButton.isEnabled()      
+    ]);
   };
 
   async closeReportNotification() {

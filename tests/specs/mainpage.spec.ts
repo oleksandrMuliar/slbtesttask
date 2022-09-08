@@ -11,22 +11,22 @@ test.describe('Smoke scenarios', () => {
     await bPage.openUrl("/qa-test/");
   });
 
-  test('Smoke scenario #1: main page have required components', async ({ page }) => {
+  test('Smoke scenario #1: Initial page have all the required components', async ({ page }) => {
     
     const mpage = new MainPage(page);
     expect(await page.title()).toEqual("QA Test");
     await expect(mpage.openReportUpdateButton).toBeVisible();
-    await expect(mpage.openReportUpdateButton).toBeVisible();
-    await expect(mpage.reportUpdatePanelHeader).toBeHidden(); // ? review
+    // await expect(mpage.reportUpdatePanelHeader).toBeHidden(); // ? review
     await expect(mpage.contentReportArea).toContainText('Content...');
       
   });
 
-  test('Smoke scenario #2: Report Update Panel could be opened', async ({ page }) => {
+  test('Smoke scenario #2: Report Update Panel could be invoked', async ({ page }) => {
     
     const mpage = new MainPage(page);
-    await mpage.invokeUpdatePanel();
     const updPanel = new UpdatePanelPage(page); 
+    await mpage.invokeUpdatePanel();
+    // await expect(updPanel.spinner).toBeHidden({timeout: 7000});     
     await expect(updPanel.reportUpdatePanelHeader).toBeVisible();
     await expect(updPanel.reportItemsList).toBeVisible();
     await expect(updPanel.fullReportUpdateButton).toBeVisible();  
@@ -37,8 +37,9 @@ test.describe('Smoke scenarios', () => {
   test('Smoke scenario #3: Report Update Panel can be closed', async ({ page }) => {
     
     const mpage = new MainPage(page);
-    await mpage.invokeUpdatePanel();
     const updPanel = new UpdatePanelPage(page); 
+    await mpage.invokeUpdatePanel();
+    // await expect(updPanel.spinner).toBeHidden({timeout: 7000});    
     // check that Panel items are displayed  
     await expect(updPanel.reportUpdatePanelHeader).toBeVisible();
     await expect(updPanel.reportItemsList).toBeVisible();
@@ -58,6 +59,7 @@ test.describe('Smoke scenarios', () => {
     const updPanel = new UpdatePanelPage(page);
     const contentArea = new ContentPage(page);
     await mpage.invokeUpdatePanel();
+    // await expect(updPanel.spinner).toBeHidden({timeout: 7000}); 
     await updPanel.addItemToReport("Ford Cortina");
     await updPanel.generateReport();
     await expect(mpage.createReportNotification).toContainText('FINISHED');
@@ -72,6 +74,7 @@ test.describe('Smoke scenarios', () => {
     const updPanel = new UpdatePanelPage(page);
     const contentArea = new ContentPage(page);
     await mpage.invokeUpdatePanel();
+    // await expect(updPanel.spinner).toBeHidden({timeout: 7000}); 
     await updPanel.addItemToReport("Ferrari 812 Superfast");
     await updPanel.addItemToReport("Seat Tarraco");
     await updPanel.generateReport();
@@ -88,6 +91,7 @@ test.describe('Smoke scenarios', () => {
     const updPanel = new UpdatePanelPage(page);
     const contentArea = new ContentPage(page);
     await mpage.invokeUpdatePanel();
+    // await expect(updPanel.spinner).toBeHidden({timeout: 7000}); 
     await updPanel.addItemToReport("Ferrari 812 Superfast");
     await updPanel.addItemToReport("Seat Tarraco");
     await updPanel.generateReport();
@@ -102,8 +106,7 @@ test.describe('Smoke scenarios', () => {
     await mpage.closeReportNotification();
     await contentArea.isItemInReport("Ferrari 812 Superfast");
     await contentArea.isItemInReport("Seat Tarraco");  
-    await contentArea.isItemInReport("Rolls Royce Wraith");  
-    
+    await contentArea.isItemInReport("Rolls Royce Wraith");      
   });
 
 });
