@@ -36,8 +36,6 @@ export class UpdatePanelPage {
   }
 
   async closeUpdatePanel() {
-    // await this.closeReportUpdateButton.click();
-    // await expect(this.closeReportUpdateButton).toBeHidden({timeout: 1000});    
     await Promise.all([
       await this.closeReportUpdateButton.click(),
       await this.closeReportUpdateButton.isHidden()
@@ -45,10 +43,6 @@ export class UpdatePanelPage {
   };
 
   async generateReport() {
-    // await this.fullReportUpdateButton.click();
-    // await expect(this.fullReportUpdateButton).toBeDisabled();
-    // await expect(this.spinner).toBeHidden({timeout: 7000}); 
-    // await expect(this.fullReportUpdateButton).toBeEnabled();
     await Promise.all([
       await this.fullReportUpdateButton.click(),
       await this.createReportNotification.isEnabled(),
