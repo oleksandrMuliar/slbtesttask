@@ -97,15 +97,15 @@ test.describe('Smoke scenarios', () => {
     await expect(header.createReportNotification).toContainText('FINISHED');
     await header.closeReportNotification();
     await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast") + addedStatus);
-    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco content") + addedStatus);
+    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco") + addedStatus);
     // add +1 item to a report
     await updPanel.addItemToReport("Rolls Royce Wraith");
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await header.closeReportNotification();
-    await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast content") + addedStatus);
-    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco content") + addedStatus);
-    await expect(content.fullText).toContainText(content.formatItemName("Rolls Royce Wraith content") + addedStatus);   
+    await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast") + addedStatus);
+    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco") + addedStatus);
+    await expect(content.fullText).toContainText(content.formatItemName("Rolls Royce Wraith") + addedStatus);   
 
   });
 
