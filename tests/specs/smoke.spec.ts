@@ -16,7 +16,6 @@ test.describe('Smoke scenarios', () => {
     const header = new HeaderPage(page);
     expect(await page.title()).toEqual("QA Test");
     await expect(header.openReportUpdateButton).toBeVisible();
-    // await expect(mpage.reportUpdatePanelHeader).toBeHidden(); // ? review
     await expect(header.contentReportArea).toContainText('Content...');
       
   });
@@ -26,7 +25,6 @@ test.describe('Smoke scenarios', () => {
     const header = new HeaderPage(page);
     const updPanel = new UpdatePanelPage(page); 
     await header.invokeUpdatePanel();
-    // await expect(updPanel.spinner).toBeHidden({timeout: 7000});     
     await expect(updPanel.reportUpdatePanelHeader).toBeVisible();
     await expect(updPanel.reportItemsList).toBeVisible();
     await expect(updPanel.fullReportUpdateButton).toBeVisible();  
@@ -39,7 +37,6 @@ test.describe('Smoke scenarios', () => {
     const header = new HeaderPage(page);
     const updPanel = new UpdatePanelPage(page); 
     await header.invokeUpdatePanel();
-    // await expect(updPanel.spinner).toBeHidden({timeout: 7000});    
     // check that Panel items are displayed  
     await expect(updPanel.reportUpdatePanelHeader).toBeVisible();
     await expect(updPanel.reportItemsList).toBeVisible();
@@ -59,7 +56,6 @@ test.describe('Smoke scenarios', () => {
     const updPanel = new UpdatePanelPage(page);
     const contentArea = new ContentPage(page);
     await mpage.invokeUpdatePanel();
-    // await expect(updPanel.spinner).toBeHidden({timeout: 7000}); 
     await updPanel.addItemToReport("Ford Cortina");
     await updPanel.generateReport();
     await expect(mpage.createReportNotification).toContainText('FINISHED');
@@ -74,7 +70,6 @@ test.describe('Smoke scenarios', () => {
     const updPanel = new UpdatePanelPage(page);
     const contentArea = new ContentPage(page);
     await header.invokeUpdatePanel();
-    // await expect(updPanel.spinner).toBeHidden({timeout: 7000}); 
     await updPanel.addItemToReport("Ferrari 812 Superfast");
     await updPanel.addItemToReport("Seat Tarraco");
     await updPanel.generateReport();
@@ -91,7 +86,6 @@ test.describe('Smoke scenarios', () => {
     const updPanel = new UpdatePanelPage(page);
     const contentArea = new ContentPage(page);
     await header.invokeUpdatePanel();
-    // await expect(updPanel.spinner).toBeHidden({timeout: 7000}); 
     await updPanel.addItemToReport("Ferrari 812 Superfast");
     await updPanel.addItemToReport("Seat Tarraco");
     await updPanel.generateReport();
