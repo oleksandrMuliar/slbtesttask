@@ -1,5 +1,4 @@
 import type { Locator, Page } from '@playwright/test';
-import { expect } from '@playwright/test';
 
 export class ContentPage {
 
@@ -7,8 +6,8 @@ export class ContentPage {
 
   // content area
   readonly contentReportItems: Locator
-  readonly createReportNotification: Locator 
-  readonly fullText: Locator 
+  readonly createReportNotification: Locator
+  readonly fullText: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -18,14 +17,10 @@ export class ContentPage {
     this.fullText = page.locator('.content .report')
   }
 
-  async isItemInReport(name: string) {
-    const reportItems = await this.page.$$("//p[contains(text(),'[CONTENT]')]");
-    const innerTexts = await Promise.all(reportItems.map(async (item, i) => {
-      return await item.innerText();
-    }));
+  formatItemName(itemName: string) {
 
-    var res = innerTexts.map(e => e.split(" ", 3)[1].toUpperCase())
-    expect(res.includes(name.toUpperCase().replace(/ /g, '_'))).toBe(true);
+    return itemName.toUpperCase().replace(/ /g, '_').trim();
+
   }
 
 }

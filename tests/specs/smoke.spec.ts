@@ -61,7 +61,7 @@ test.describe('Smoke scenarios', () => {
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await header.closeReportNotification();
-    await content.isItemInReport("Ford Cortina"); 
+    await expect(content.fullText).toContainText(content.formatItemName("Ford Cortina"));    
 
   });
 
@@ -76,8 +76,8 @@ test.describe('Smoke scenarios', () => {
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await updPanel.closeReportNotification();
-    await content.isItemInReport("Ferrari 812 Superfast");
-    await content.isItemInReport("Seat Tarraco");  
+    await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast"));
+    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco"));
     
   });
 
@@ -92,16 +92,17 @@ test.describe('Smoke scenarios', () => {
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await header.closeReportNotification();
-    await content.isItemInReport("Ferrari 812 Superfast");
-    await content.isItemInReport("Seat Tarraco");  
+    await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast"));
+    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco"));
     // add +1 item to a report
     await updPanel.addItemToReport("Rolls Royce Wraith");
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await header.closeReportNotification();
-    await content.isItemInReport("Ferrari 812 Superfast");
-    await content.isItemInReport("Seat Tarraco");  
-    await content.isItemInReport("Rolls Royce Wraith");      
+    await expect(content.fullText).toContainText(content.formatItemName("Ferrari 812 Superfast"));
+    await expect(content.fullText).toContainText(content.formatItemName("Seat Tarraco"));
+    await expect(content.fullText).toContainText(content.formatItemName("Rolls Royce Wraith"));   
+
   });
 
 });
