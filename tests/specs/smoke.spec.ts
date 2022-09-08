@@ -14,9 +14,10 @@ test.describe('Smoke scenarios', () => {
   test('Smoke scenario #1: Initial page have all the required components', async ({ page }) => {
     
     const header = new HeaderPage(page);
+    const content = new ContentPage(page);
     expect(await page.title()).toEqual("QA Test");
     await expect(header.openReportUpdateButton).toBeVisible();
-    await expect(header.contentReportArea).toContainText('Content...');
+    await expect(content.innerText).toContainText('Content...');
       
   });
 
@@ -52,14 +53,14 @@ test.describe('Smoke scenarios', () => {
 
   test('Smoke scenario #4: Add single item to report', async ({ page }) => {
     
-    const mpage = new HeaderPage(page);
+    const header = new HeaderPage(page);
     const updPanel = new UpdatePanelPage(page);
     const contentArea = new ContentPage(page);
-    await mpage.invokeUpdatePanel();
+    await header.invokeUpdatePanel();
     await updPanel.addItemToReport("Ford Cortina");
     await updPanel.generateReport();
-    await expect(mpage.createReportNotification).toContainText('FINISHED');
-    await mpage.closeReportNotification();
+    await expect(header.createReportNotification).toContainText('FINISHED');
+    await header.closeReportNotification();
     await contentArea.isItemInReport("Ford Cortina"); 
 
   });
@@ -68,15 +69,15 @@ test.describe('Smoke scenarios', () => {
     
     const header = new HeaderPage(page);
     const updPanel = new UpdatePanelPage(page);
-    const contentArea = new ContentPage(page);
+    const content = new ContentPage(page);
     await header.invokeUpdatePanel();
     await updPanel.addItemToReport("Ferrari 812 Superfast");
     await updPanel.addItemToReport("Seat Tarraco");
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await updPanel.closeReportNotification();
-    await contentArea.isItemInReport("Ferrari 812 Superfast");
-    await contentArea.isItemInReport("Seat Tarraco");  
+    await content.isItemInReport("Ferrari 812 Superfast");
+    await content.isItemInReport("Seat Tarraco");  
     
   });
 
@@ -84,23 +85,23 @@ test.describe('Smoke scenarios', () => {
     
     const header = new HeaderPage(page);
     const updPanel = new UpdatePanelPage(page);
-    const contentArea = new ContentPage(page);
+    const content = new ContentPage(page);
     await header.invokeUpdatePanel();
     await updPanel.addItemToReport("Ferrari 812 Superfast");
     await updPanel.addItemToReport("Seat Tarraco");
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await header.closeReportNotification();
-    await contentArea.isItemInReport("Ferrari 812 Superfast");
-    await contentArea.isItemInReport("Seat Tarraco");  
+    await content.isItemInReport("Ferrari 812 Superfast");
+    await content.isItemInReport("Seat Tarraco");  
     // add +1 item to a report
     await updPanel.addItemToReport("Rolls Royce Wraith");
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await header.closeReportNotification();
-    await contentArea.isItemInReport("Ferrari 812 Superfast");
-    await contentArea.isItemInReport("Seat Tarraco");  
-    await contentArea.isItemInReport("Rolls Royce Wraith");      
+    await content.isItemInReport("Ferrari 812 Superfast");
+    await content.isItemInReport("Seat Tarraco");  
+    await content.isItemInReport("Rolls Royce Wraith");      
   });
 
 });
