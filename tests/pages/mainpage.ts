@@ -1,10 +1,12 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-export class UpdatePanelPage {
+export class MainPage {
 
   readonly page: Page;
-
+  // initial items present on a page
+  readonly openReportUpdateButton: Locator
+  readonly contentReportArea: Locator
   // items related to 'Report Update Panel'
   readonly closeReportUpdateButton: Locator  
   readonly fullReportUpdateButton: Locator    
@@ -21,8 +23,10 @@ export class UpdatePanelPage {
   
   constructor(page: Page) {
     this.page = page
+    this.openReportUpdateButton = page.locator('.update-report-panel-button')
     this.closeReportUpdateButton = page.locator('.report-update-panel__close-button')
     this.fullReportUpdateButton = page.locator('.report-update-panel__footer .full-update-report-button')
+    this.contentReportArea = page.locator('.content .report')
     this.addItemButton = page.locator('.insert-report-content-item-button')        
     this.reportItemsList = page.locator('.report-content-item-list')        
     this.reportItemNames = page.locator('div.report-content-item__name')        
@@ -35,20 +39,26 @@ export class UpdatePanelPage {
     this.closeReportNotificationButton = page.locator('.alert .close') 
   }
 
-  async closeUpdatePanel() {
+  async invokeUpdatePanel() {
     await Promise.all([
-      await this.closeReportUpdateButton.click(),
-      await this.closeReportUpdateButton.isHidden()
+      await this.openReportUpdateButton.click(),
+      await expect(this.spinner).toBeHidden({timeout: 7000})
     ]);
+    
+    // await this.openReportUpdateButton.click();
+    // await expect(this.spinner).toBeHidden({timeout: 7000});    
+  };
+
+  async closeUpdatePanel() {
+    await this.closeReportUpdateButton.click();
+    await expect(this.closeReportUpdateButton).toBeHidden({timeout: 1000});    
   };
 
   async generateReport() {
-    await Promise.all([
-      await this.fullReportUpdateButton.click(),
-      await this.createReportNotification.isEnabled(),
-      await this.spinner.isHidden(),
-      await this.fullReportUpdateButton.isEnabled()      
-    ]);
+    await this.fullReportUpdateButton.click();
+    await expect(this.fullReportUpdateButton).toBeDisabled();
+    await expect(this.spinner).toBeHidden({timeout: 7000}); 
+    await expect(this.fullReportUpdateButton).toBeEnabled();
   };
 
   async closeReportNotification() {
