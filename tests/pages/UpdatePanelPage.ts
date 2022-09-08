@@ -56,6 +56,9 @@ export class UpdatePanelPage {
   };
 
   async addItemToReport(name: string) {
+    await Promise.all([
+      await this.reportItemsList.isEnabled()      
+    ]);    
     const count = await this.reportItemNames.count()
     for (let i = 0; i < count; ++i) {
       if (await this.reportItemNames.nth(i).textContent() == name) {

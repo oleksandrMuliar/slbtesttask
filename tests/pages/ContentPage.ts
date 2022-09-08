@@ -7,13 +7,15 @@ export class ContentPage {
 
   // content area
   readonly contentReportItems: Locator
-  readonly createReportNotification: Locator  
+  readonly createReportNotification: Locator 
+  readonly fullText: Locator 
 
   constructor(page: Page) {
     this.page = page
     // content area
     this.contentReportItems = page.locator('//p[contains(text(),\'Inserted\')]')
     this.createReportNotification = page.locator('div.result-alert')
+    this.fullText = page.locator('.content .report')
   }
 
   async isItemInReport(name: string) {

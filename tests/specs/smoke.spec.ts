@@ -17,7 +17,7 @@ test.describe('Smoke scenarios', () => {
     const content = new ContentPage(page);
     expect(await page.title()).toEqual("QA Test");
     await expect(header.openReportUpdateButton).toBeVisible();
-    await expect(content.innerText).toContainText('Content...');
+    await expect(content.fullText).toContainText('Content...');
       
   });
 
@@ -55,13 +55,13 @@ test.describe('Smoke scenarios', () => {
     
     const header = new HeaderPage(page);
     const updPanel = new UpdatePanelPage(page);
-    const contentArea = new ContentPage(page);
+    const content = new ContentPage(page);
     await header.invokeUpdatePanel();
     await updPanel.addItemToReport("Ford Cortina");
     await updPanel.generateReport();
     await expect(header.createReportNotification).toContainText('FINISHED');
     await header.closeReportNotification();
-    await contentArea.isItemInReport("Ford Cortina"); 
+    await content.isItemInReport("Ford Cortina"); 
 
   });
 
@@ -81,7 +81,7 @@ test.describe('Smoke scenarios', () => {
     
   });
 
-  test.only('Smoke scenario #6: Add items to already existing report', async ({ page }) => {
+  test('Smoke scenario #6: Add items to already existing report', async ({ page }) => {
     
     const header = new HeaderPage(page);
     const updPanel = new UpdatePanelPage(page);
