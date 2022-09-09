@@ -1,10 +1,10 @@
 # slbtesttask
 
-To run all the scenarios use command:
+To run all the scenarios use command (depending on env you need):
 
-BASE_URL=https://mr-fedorof.github.io npx playwright test --headed
+ENV=STAGING npx playwright test --headed
 
-Where BASE_URL - env you want to test the scenarios
+or
 
-Defined in 'playwright.config.ts':
-baseURL: process.env.BASE_URL
+ENV=DEV npx playwright test --headed
+
