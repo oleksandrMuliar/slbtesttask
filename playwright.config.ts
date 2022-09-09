@@ -1,11 +1,9 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
+import dotenv from 'dotenv';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
+// Read from default ".env" file.
+dotenv.config();
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -37,7 +35,8 @@ const config: PlaywrightTestConfig = {
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'https://mr-fedorof.github.io',
-    baseURL: process.env.BASE_URL,    
+    // baseURL: process.env.BASE_URL,
+    baseURL: process.env.ENV === 'STAGING' ? process.env.STAGING_BASE_URL : process.env.DEV_BASE_URL,    
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
