@@ -7,4 +7,3 @@ ENV=STAGING npx playwright test --headed
 or
 
 ENV=DEV npx playwright test --headed
-
