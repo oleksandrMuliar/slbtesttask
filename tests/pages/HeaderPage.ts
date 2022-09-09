@@ -5,16 +5,13 @@ export class HeaderPage {
   readonly page: Page;
   // initial items present on a page
   readonly openReportUpdateButton: Locator
-  // items related to 'Report Update Panel'
-  readonly spinner: Locator
   // content area
   readonly createReportNotification: Locator  
   readonly closeReportNotificationButton: Locator  
   
   constructor(page: Page) {
     this.page = page
-    this.openReportUpdateButton = page.locator('.update-report-panel-button')
-    this.spinner = page.locator('div.spinner-border')        
+    this.openReportUpdateButton = page.locator('.update-report-panel-button')       
     // content area
     this.createReportNotification = page.locator('div.result-alert') 
     this.closeReportNotificationButton = page.locator('.alert .close') 
@@ -23,7 +20,7 @@ export class HeaderPage {
   async invokeUpdatePanel() {
     await Promise.all([
       await this.openReportUpdateButton.click(),
-      await this.spinner.isHidden()
+      await this.page.locator('div.spinner-border').isHidden()
     ]);
   };
 
